@@ -1,0 +1,59 @@
+<html ng-app="myApp">
+<head>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular.min.js"></script>
+  <script src="main.js"></script>
+</head>
+<body ng-controller="mainCtrl">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="col-sm-8">
+        <section>
+          <span>{{ myPokemon.length }} Pokemon Owned</span>
+          <p>[ <a href="" ng-click="releaseAll()">Release All Selected Pokemon</a> ]</p>
+          <button ng-click="selectAll()">Mark All</button>
+        </section>
+
+        <form ng-submit="addPokemon()" class="pokemon-form">
+          <input type="text" ng-model="pokemonText" placeholder="Log New Pokemon" required/>
+          <br />
+          <input type="text" ng-model="nicknameText" placeholder="Enter Pokemon Nickname" required/>
+          <br />
+          <input type="submit" value="Add Pokemon" />
+        </form>
+      </div>
+
+      <div class="col-sm-12">
+        <ol><h3>Pokemon In party</h3>
+          <li ng-repeat="pokemon in partyPokemon track by $index" class="col-sm-3 box">
+            <h3>Nickname: {{ pokemon.nickname }}</h3>
+            <h4>Species: {{ pokemon.pokemon }}</h4>
+            <p><img ng-src={{pokemon.imageUrl}} class="partyimage"></p>
+            <button ng-click="releasePokemon()">Release Pokemon</button>
+            <div class="removeinfo">
+              <button ng-show="hasSixPokemon" ng-click="moveToPC()" class="removeinfo">Move Pokemon to PC</button>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+    </div>
+    <div class="col-sm-12">
+      <ol><h3>Pokemon In PC</h3>
+        <li ng-repeat="pokemon in pcPokemon track by $index" class="col-sm-3 box">
+          <h3>Nickname: {{ pokemon.nickname }}</h3>
+          <h4>Species: {{ pokemon.pokemon }}</h4>
+          <p>
+            <img ng-src={{pokemon.imageUrl}} class="pcimage">
+          </p>
+          <button ng-click="releasePokemon()">Release Pokemon</button>
+        </li>
+      </ol>
+    </div>
+  </div>
+</body>
+</html>
