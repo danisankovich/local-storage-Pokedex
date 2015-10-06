@@ -39,6 +39,10 @@
             <div class="removeinfo">
               <button ng-click="moveToPC()" class="removeinfo">Move Pokemon to PC</button>
             </div>
+            <button ng-hide="editing" ng-click="openEdit()">Edit Nickname</button>
+            <form ng-show="editing" ng-submit="editPartyPokemon()">
+              <input type="text" ng-model="nicknameText" placeholder="Enter Pokemon Nickname" ng-value="pokemon.nickname" required/>
+            </form>
           </li>
         </ol>
       </div>
@@ -54,6 +58,12 @@
           </p>
           <button ng-click="releasePokemonFromPC()">Release Pokemon</button>
           <button ng-click="putInParty()">Move To Party</button>
+          <div>
+            <button ng-hide="editing" ng-click="openEdit()">Edit Nickname</button>
+            <form ng-show="editing" ng-submit=editPcPokemon()>
+              <input type="text" ng-model="nicknameText" name="newNickname" ng-value="pokemon.nickname">
+            </form>
+          </div>
         </li>
       </ol>
     </div>

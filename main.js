@@ -1,6 +1,9 @@
 var app = angular.module('myApp', []);
 
 app.controller('mainCtrl', ['$scope', '$http', "$location", function($scope, $http, $location) {
+	$scope.editing = false;
+	$scope.newName =[];
+
 	$scope.held = localStorage.getItem('myParty');
 	$scope.myParty = (localStorage.getItem('myParty')!==null) ? JSON.parse($scope.held) : [];
 	localStorage.setItem('myParty', JSON.stringify($scope.myParty));
@@ -20,6 +23,23 @@ app.controller('mainCtrl', ['$scope', '$http', "$location", function($scope, $ht
 			$scope.hasSixPokemon = false;
 		}
 	};
+
+	$scope.openEdit = function() {
+		$scope.editing = true;
+		$scope.nickname = this.pokemon.nickname;
+	};
+
+	$scope.editPcPokemon = function() {
+		this.pokemon.nickname = this.nicknameText;
+		localStorage.setItem('myPokemon', JSON.stringify($scope.myPokemon));
+		$scope.editing = false;
+	};
+	$scope.editPartyPokemon = function() {
+		this.pokemon.nickname = this.nicknameText;
+		localStorage.setItem('myParty', JSON.stringify($scope.myParty));
+		$scope.editing = false;
+	};
+
 	$scope.addPokemon = function() {
 			$http.get('http://pokeapi.co/api/v1/pokedex/1').success(function(response) {
 				angular.forEach(response.pokemon, function(poke) {
@@ -63,7 +83,6 @@ app.controller('mainCtrl', ['$scope', '$http', "$location", function($scope, $ht
   };
 
   $scope.moveToPC = function() {
-		console.log(this.pokemon);
 		tempPoke = this.pokemon;
     $scope.myParty.splice(this.$index, 1);
 		$scope.myPokemon.push(tempPoke);
@@ -82,7 +101,6 @@ app.controller('mainCtrl', ['$scope', '$http', "$location", function($scope, $ht
 		checkParty();
 		if($scope.hasSixPokemon === false) {
 			tempPoke = this.pokemon;
-			console.log(tempPoke);
 			if ($scope.hasSixPokemon === false) {
 				$scope.myParty.push(tempPoke);
 				$scope.myPokemon.splice(this.$index, 1);
