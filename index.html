@@ -15,7 +15,7 @@
 
         <div class="col-sm-4 myinfo">
           <h3>{{ myPokemon.length }} Pokemon Owned</h3>
-          <p>[ <a href="" ng-click="releaseAll()">Release All Pokemon</a> ]</p>
+          <p>[ <a href="" ng-click="releaseAll()">Release All Pokemon In PC</a> ]</p>
         </div>
         <div class="col-sm-8">
         <form ng-submit="addPokemon()" class="pokemon-form">
@@ -31,13 +31,13 @@
 
       <div class="col-sm-12">
         <ol><h3>Pokemon In party</h3>
-          <li ng-repeat="pokemon in partyPokemon track by $index" class="col-sm-3 box">
+          <li ng-repeat="pokemon in myParty track by $index" class="col-sm-3 box">
             <h3>Nickname: {{ pokemon.nickname }}</h3>
             <h4>Species: {{ pokemon.pokemon }}</h4>
             <p><img ng-src={{pokemon.imageUrl}} class="partyimage"></p>
-            <button ng-click="releasePokemon()">Release Pokemon</button>
+            <button ng-click="releasePokemonFromParty()">Release Pokemon</button>
             <div class="removeinfo">
-              <button ng-show="hasSixPokemon" ng-click="moveToPC()" class="removeinfo">Move Pokemon to PC</button>
+              <button ng-click="moveToPC()" class="removeinfo">Move Pokemon to PC</button>
             </div>
           </li>
         </ol>
@@ -52,7 +52,8 @@
           <p>
             <img ng-src={{pokemon.imageUrl}} class="pcimage">
           </p>
-          <button ng-click="releasePokemon()">Release Pokemon</button>
+          <button ng-click="releasePokemonFromPC()">Release Pokemon</button>
+          <button ng-click="putInParty()">Move To Party</button>
         </li>
       </ol>
     </div>
