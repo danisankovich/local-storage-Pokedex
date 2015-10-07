@@ -1,8 +1,19 @@
 var app = angular.module('myApp', []);
 
 app.controller('mainCtrl', ['$scope', '$http', "$location", function($scope, $http, $location) {
+	if($scope.hasName === false) {
+		$scope.hasName = false;
+	}
+	else {
+		$scope.hasName = true;
+	}
+
+	$scope.editingName = false;
 	$scope.editing = false;
 	$scope.newName =[];
+
+	$scope.nameHolder = localStorage.getItem('myName');
+	$scope.myName = (localStorage.getItem('myName')!==null) ? JSON.parse($scope.nameHolder) : '';
 
 	$scope.held = localStorage.getItem('myParty');
 	$scope.myParty = (localStorage.getItem('myParty')!==null) ? JSON.parse($scope.held) : [];
@@ -14,6 +25,10 @@ app.controller('mainCtrl', ['$scope', '$http', "$location", function($scope, $ht
 	$scope.myPokemon = (localStorage.getItem('myPokemon')!==null) ? JSON.parse($scope.saved) : [];
 	localStorage.setItem('myPokemon', JSON.stringify($scope.myPokemon));
 	$scope.pcPokemon = $scope.myPokemon;
+
+	$scope.editBox = function() {
+		$scope.editingName = true;
+	};
 
 	var checkParty = function() {
 		if ($scope.partyPokemon.length === 6) {
@@ -38,6 +53,13 @@ app.controller('mainCtrl', ['$scope', '$http', "$location", function($scope, $ht
 		this.pokemon.nickname = this.nicknameText;
 		localStorage.setItem('myParty', JSON.stringify($scope.myParty));
 		$scope.editing = false;
+	};
+
+	$scope.setName = function() {
+		$scope.myName = this.nameText;
+		localStorage.setItem('myName', JSON.stringify($scope.myName));
+		$scope.hasName = true;
+		$scope.editingName = false;
 	};
 
 	$scope.addPokemon = function() {
